@@ -17,6 +17,14 @@ apiEndpoints:
     host: '*'
     paths:
       - '/matching*'
+  prometheus_api:
+    host: '*'
+    paths:
+      - '/prometheus*'
+  grafana_api:
+    host: '*'
+    paths:
+      - '/grafana*'
 serviceEndpoints:
   user_service:
     url: ${USER_SERVICE_URL}
@@ -24,6 +32,10 @@ serviceEndpoints:
     url: ${EMBEDDING_SERVICE_URL}
   matching_service:
     url: ${MATCHING_SERVICE_URL}
+  prometheus_service:
+    url: http://prometheus.monitoring.svc.cluster.local:9090 # Internal Prometheus service URL
+  grafana_service:
+    url: http://grafana.monitoring.svc.cluster.local:3000 # Internal Grafana service URL
 policies:
   - basic-auth
   - cors
@@ -55,3 +67,17 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: matching_service
+  prometheus_pipeline:
+    apiEndpoints:
+      - prometheus_api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: prometheus_service
+  grafana_pipeline:
+    apiEndpoints:
+      - grafana_api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: grafana_service
