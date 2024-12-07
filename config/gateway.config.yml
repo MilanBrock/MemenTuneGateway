@@ -71,23 +71,21 @@ pipelines:
     apiEndpoints:
       - prometheus_api
     policies:
-      # - basic-auth: 
-      #     - action:
-      #         users:
-      #           - username: ${BASIC_AUTH_USERNAME}
-      #             password: ${BASIC_AUTH_PASSWORD}
       - proxy:
           - action:
               serviceEndpoint: prometheus_service
+              changeOrigin: true
+              rewrite:
+                pattern: ^/prometheus(.*)
+                replacement: $1
   grafana_pipeline:
     apiEndpoints:
       - grafana_api
     policies:
-      # - basic-auth: 
-      #     - action:
-      #         users:
-      #           - username: ${BASIC_AUTH_USERNAME}
-      #             password: ${BASIC_AUTH_PASSWORD}
       - proxy:
           - action:
               serviceEndpoint: grafana_service
+              changeOrigin: true
+              rewrite:
+                pattern: ^/grafana(.*)
+                replacement: $1
