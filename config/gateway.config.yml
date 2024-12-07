@@ -1,0 +1,57 @@
+# start -> node server.js
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  user_api:
+    host: '*'
+    paths:
+      - '/user*'
+  embedding_api:
+    host: '*'
+    paths:
+      - '/embedding*'
+  matching_api:
+    host: '*'
+    paths:
+      - '/matching*'
+serviceEndpoints:
+  user_service:
+    url: ${USER_SERVICE_URL}
+  embedding_service:
+    url: ${EMBEDDING_SERVICE_URL}
+  matching_service:
+    url: ${MATCHING_SERVICE_URL}
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  user_pipeline:
+    apiEndpoints:
+      - user_api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: user_service
+  embedding_pipeline:
+    apiEndpoints:
+      - embedding_api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: embedding_service
+  matching_pipeline:
+    apiEndpoints:
+      - matching_api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: matching_service

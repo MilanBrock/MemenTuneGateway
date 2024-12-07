@@ -1,0 +1,26 @@
+# Core
+db:
+  redis:
+    emulate: true
+    namespace: EG
+
+# plugins:
+  # express-gateway-plugin-example:
+  #   param1: 'param from system.config' 
+
+crypto:
+  cipherKey: ${CIPHER_KEY}
+  algorithm: aes256
+  saltRounds: ${SALT_ROUNDS}
+
+# OAuth2 Settings
+session:
+  secret: ${SESSION_SECRET}
+  resave: false
+  saveUninitialized: false
+accessTokens:
+  timeToExpiry: 7200000
+refreshTokens:
+  timeToExpiry: 7200000
+authorizationCodes:
+  timeToExpiry: 300000
