@@ -33,9 +33,9 @@ serviceEndpoints:
   matching_service:
     url: ${MATCHING_SERVICE_URL}
   prometheus_service:
-    url: http://prometheus.monitoring.svc.cluster.local:9090 # Internal Prometheus service URL
+    url: ${PROMETHEUS_SERVICE_URL}
   grafana_service:
-    url: http://grafana.monitoring.svc.cluster.local:3000 # Internal Grafana service URL
+    url: ${GRAFANA_SERVICE_URL}
 policies:
   - basic-auth
   - cors
